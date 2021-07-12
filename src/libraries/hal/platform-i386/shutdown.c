@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stddef.h>
 
-void wait_for_keyboard_controller()
+void wait_for_keyboard_controller(void)
 {
     while((hal_inb(0x64) & 2) != 0) {
         // Do nothing until the keyboard controller can accept commands.
@@ -12,7 +12,7 @@ void wait_for_keyboard_controller()
 }
 
 // Hard shutdown: Disable interrupts then do a keyboard RESET.
-void hal_shutdown_hard()
+void hal_shutdown_hard(void)
 {
     puts("\r\nDoing a hard shutdown.\r\n");
 
@@ -45,7 +45,7 @@ void hal_shutdown_test_fail(UNUSED void *data)
 }
 
 __attribute__((constructor))
-void hal_shutdown_register_events()
+void hal_shutdown_register_events(void)
 {
     event_watch("HAL shutdown",            &hal_shutdown);
     event_watch("HAL shutdown test fail",  &hal_shutdown_test_fail);

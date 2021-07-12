@@ -11,7 +11,7 @@ static uint16_t LINE_CONTROL_REGISTER;
 static int initialized = 0;
 
 // Initialize the serial port.
-void hal_basic_uart_init()
+void hal_basic_uart_init(void)
 {
     LINE_CONTROL_REGISTER = PORT + 5;
 
@@ -25,12 +25,12 @@ void hal_basic_uart_init()
 }
 
 // Returns true if you can transmit, or false otherwise.
-int hal_basic_uart_can_send()
+int hal_basic_uart_can_send(void)
 {
     return hal_inb(LINE_CONTROL_REGISTER) & 0x20;
 }
 
-void hal_basic_uart_wait()
+void hal_basic_uart_wait(void)
 {
     while(!hal_basic_uart_can_send()) {
         // Do nothing until it's okay to send data.
@@ -56,7 +56,7 @@ void hal_basic_uart_print(const char *string)
 }
 
 __attribute__((constructor))
-void hal_basic_uart_register_events()
+void hal_basic_uart_register_events(void)
 {
     event_watch("print string", (void (*)(void*))&hal_basic_uart_print);
 }

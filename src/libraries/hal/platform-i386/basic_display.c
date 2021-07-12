@@ -36,7 +36,7 @@ void hal_basic_display_move_cursor(uint8_t row_, uint8_t col_)
     hal_outb(VGA_DATA_REGISTER, (uint8_t)position); // Actually set it.
 }
 
-void hal_basic_display_clear()
+void hal_basic_display_clear(void)
 {
     // We to avoid inlining a freaking 4KB string of spaces,
     // we initialize it to null bytes and set it to spaces afterwards.
@@ -56,7 +56,7 @@ void hal_basic_display_clear()
     hal_basic_display_move_cursor(0, 0);
 }
 
-void hal_basic_display_scroll()
+void hal_basic_display_scroll(void)
 {
     for (uint16_t i = 0; i < (VIDEO_HEIGHT - 1); i++) {
         for (uint16_t _col = 0; _col < VIDEO_WIDTH; _col++) {
@@ -132,7 +132,7 @@ void hal_basic_display_print(const char *string)
 }
 
 __attribute__((constructor))
-void hal_basic_display_register()
+void hal_basic_display_register(void)
 {
     event_watch("print string", (void (*)(void*))&hal_basic_display_print);
 }

@@ -2,6 +2,7 @@
 #include <ali/event.h>
 #include <dmm.h>
 #include <stddef.h>
+#include <stdio.h>
 
 #include "exceptions.h"
 #include "idt.h"
@@ -19,17 +20,22 @@ void hal_init(void *data)
         NULL
     };
 
+    puts("  Configuring exception handlers.");
     hal_exceptions_init();
+    puts("  Configuring IDT.");
     hal_idt_init();
+    puts("  Making the bad assumption that multiboot works.");
     hal_multiboot_init();
 
+    puts("  Initializing Ali (libc).");
     ali_init(&_dmm_malloc, &_dmm_free, &_dmm_realloc);
+    puts("  Initializing greeter");
     event_trigger("greeter display", metadata);
     event_trigger("HAL interrupts enable", NULL);
 }
 
 __attribute__((constructor))
-void hal_init_register_events()
+void hal_init_register_events(void)
 {
     event_watch("HAL init", &hal_init);
 }

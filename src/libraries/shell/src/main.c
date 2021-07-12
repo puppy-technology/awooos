@@ -14,7 +14,7 @@
 
 #define COMMAND(name) (strcmp(result->pieces[0], name) == 0)
 
-void shell_print_prompt()
+void shell_print_prompt(void)
 {
     fputs("# ", stdout);
 }
@@ -113,14 +113,14 @@ void shell_keyboard_callback(void *data)
     }
 }
 
-void shell_init()
+void shell_init(__attribute__((unused)) void *data)
 {
     puts("AwooOS Interactive Shell.");
     shell_print_prompt();
 }
 
 __attribute__((constructor))
-void shell_register_events()
+void shell_register_events(void)
 {
     event_watch("shell init", &shell_init);
     event_watch("keyboard event", &shell_keyboard_callback);

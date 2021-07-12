@@ -61,7 +61,7 @@ void hal_exception_handler(Registers *r)
     hal_outb(0x20, 0x20);
 }
 
-void hal_irq_remap()
+void hal_irq_remap(void)
 {
     // Start the initialization sequence.
     hal_outb(PIC1_COMMAND, ICW1_INIT + ICW1_ICW4);

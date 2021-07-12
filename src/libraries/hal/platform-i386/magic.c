@@ -3,12 +3,12 @@
 static uint32_t magic;
 static void *arg;
 
-void *hal_get_arg()
+void *hal_get_arg(void)
 {
     return arg;
 }
 
-uint32_t hal_get_magic()
+uint32_t hal_get_magic(void)
 {
     return magic;
 }

@@ -76,7 +76,7 @@ void hal_keyboard_callback(UNUSED void *data)
 }
 
 __attribute__((constructor))
-void hal_keyboard_register_events()
+void hal_keyboard_register_events(void)
 {
     // IRQ events are registered with the names specified in `irq_names`.
     //

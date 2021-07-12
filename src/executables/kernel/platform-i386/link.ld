@@ -1,48 +1,51 @@
 ENTRY(_start)
 
 SECTIONS {
-	. = 0x100000;
-	kernel_start = .;
-
-	.debug_info : {
-		kernel_debug_info_start = .;
-		*(.debug_info)
-		kernel_debug_info_end = .;
-	}
-
-	.text : ALIGN (0x1000) {
+	.text 0x100000 : {
+		kernel_start = .;
 		kernel_code_start = .;
-		*(.mboot)
+		KEEP(*(.mboot))
 		*(.text)
 		kernel_code_end = .;
 	}
 
-	.rodata ALIGN (0x1000) : {
+	.rodata ALIGN(4) : {
 		kernel_rodata_start = .;
 		*(.rodata)
 		kernel_rodata_end = .;
 	}
 
-	.data ALIGN (0x1000) : {
+	.data ALIGN(4) : {
+		__CTOR_LIST__ = .;
+		*(.ctors)
+		*(.init_array)
+		LONG(0)
+		__CTOR_END__ = .;
+		__DTOR_LIST__ = .;
+		*(.dtors)
+		*(.fini_array)
+		LONG(0)
+		__DTOR_END__ = .;
+
 		kernel_data_start = .;
 		*(.data)
 		kernel_data_end = .;
 	}
 
-	.bss ALIGN (0x1000) : {
+	.bss ALIGN(4) : {
 		kernel_bss_start = .;
 		*(COMMON)
 		*(.bss)
 		kernel_bss_end = .;
 	}
 
-	kernel_end = .;
-
-	.text ALIGN (0x1000) : {
+	.comment ALIGN(4) : {
 		kernel_comment_start = .;
 		*(.comment)
 		kernel_comment_end = .;
+	}
 
+	.debug_info ALIGN(4) : {
 		kernel_debug_info_start = .;
 		*(.debug_info)
 		kernel_debug_info_end = .;
@@ -80,15 +83,6 @@ SECTIONS {
 		kernel_debug_loc_end = .;
 	}
 
-	.data ALIGN(0x1000) : {
-		__CTOR_LIST__ = .;
-		*(.ctors)
-		LONG(0)
-		__CTOR_END__ = .;
-		__DTOR_LIST__ = .;
-		*(.dtors)
-		LONG(0)
-		__DTOR_END__ = .;
-	}
+	kernel_end = .;
 }
 

@@ -8,7 +8,7 @@ CC   := clang
 endif
 AS   := nasm
 AR   := ar
-LD   := ld
+LD   := ld.lld
 QEMU ?= qemu-system-${TARGET}
 CLANG_CHECK ?= clang-check
 
@@ -86,8 +86,8 @@ src/executables/kernel.exe: ${OBJFILES} ${LIBRARIES}
 
 iso: ${ISO_FILE}
 ${ISO_FILE}: ${EXECUTABLES}
-	@cp -r assets/isofs/ ./
-	@cp ${EXECUTABLES} isofs/
+	cp -R assets/isofs/ ./isofs
+	cp ${EXECUTABLES} ./isofs/
 	xorriso -report_about HINT -abort_on WARNING -as mkisofs -quiet -boot-info-table -R -b boot/grub/stage2_eltorito -no-emul-boot -boot-load-size 4 -input-charset utf-8 -o ${ISO_FILE} isofs
 
 test: lint

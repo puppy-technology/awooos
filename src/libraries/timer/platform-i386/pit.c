@@ -9,11 +9,11 @@ void pit_phase(int hz) {
     hal_outb(0x40, (uint8_t)(divisor >> 8));    // Set high byte of divisor
 }
 
-void pit_init() {
+void pit_init(__attribute__((unused)) void *data) {
     pit_phase(PIT_FREQUENCY);
 }
 
 __attribute__((constructor))
-void timer_pit_init_register_events() {
+void timer_pit_init_register_events(void) {
     event_watch("HAL init", &pit_init);
 }

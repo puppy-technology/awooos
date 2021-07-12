@@ -11,6 +11,6 @@ void timer_event(void *_data) {
 }
 
 __attribute__((constructor))
-void timer_init_register_events() {
+void timer_init_register_events(void) {
     event_watch(irq_names[0], &timer_event);
 }

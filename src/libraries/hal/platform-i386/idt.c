@@ -5,12 +5,12 @@
 static IdtPointer idtd;
 static IdtEntry idt[256] = {{0,0,0,0,0}};
 
-void hal_idt_load()
+void hal_idt_load(void)
 {
     __asm__ __volatile__ ("lidt %0" : : "m" (idtd));
 }
 
-void hal_idt_init()
+void hal_idt_init(void)
 {
     // We need the GDT to be initialized first.
     hal_gdt_init();

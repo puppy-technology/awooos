@@ -11,7 +11,7 @@ void hal_panic_init(Hal_PanicFn *panicfn)
 }
 
 __attribute__((constructor))
-void hal_panic_register_events()
+void hal_panic_register_events(void)
 {
     event_watch("register panic function", (void (*)(void*))hal_panic_init);
     event_watch("register panic function", (void (*)(void*))dmm_init);

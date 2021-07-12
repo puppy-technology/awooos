@@ -12,7 +12,7 @@ void hal_flail_init(void *data)
 }
 
 __attribute__((constructor))
-void hal_flail_register_events()
+void hal_flail_register_events(void)
 {
     event_watch("HAL init", &hal_flail_init);
 }

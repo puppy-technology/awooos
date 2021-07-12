@@ -14,7 +14,7 @@
 char *tinker_uint_to_str(unsigned long n);
 void tinker_print(const char *string);
 
-void test_timer_instance()
+void test_timer_instance(void)
 {
     Timer a = {0,0};
     Timer b = {0,0};

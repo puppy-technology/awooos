@@ -13,7 +13,7 @@ void greeter_display_greeting(void *data)
 }
 
 __attribute__((constructor))
-void greeter_register_events()
+void greeter_register_events(void)
 {
     event_watch("greeter display", &greeter_display_greeting);
 }
